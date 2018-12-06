@@ -1,1 +1,111 @@
-Hello
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>scrapeIt</title>
+
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/material-kit.min.css' %}"/>   
+
+
+</head>
+    <body>
+            <nav class="navbar navbar-inverse navbar-expand-lg bg-dark" role="navigation-demo">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-translate">
+                            <a class="navbar-brand" href="#">SCRAPEIT</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                                <span class="navbar-toggler-icon"></span>
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="material-icons">settings</i>About
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-->
+                </nav>
+
+            <div class="subscribe-line subscribe-line-image" style="background-image: url('{% static 'images/pexels-photo-273222.jpeg' %}'); background-size: cover;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 ml-auto mr-auto">
+                            <div class="text-center">
+                                <h3 class="title">Scrape Medium</h3>
+                                <p class="description">
+                                    Enter medium tags here to scrape most recent medium blogs and retrieve info.
+                                </p>
+                            </div>
+                            <div class="card card-raised card-form-horizontal">
+                                <div class="card-body ">
+                                    <form action="" id="tag-form" method="POST">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-6 ">
+                                                <div class="input-group">
+                                                    <input type="text" value="" placeholder="Eg: business" class="form-control" id="tag" name="tag">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 ">
+                                                <button type="submit" class="btn btn-primary btn-block">Scrape</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
+    <script src="{% static 'js/bootstrap-material-design.min.js' %}"></script>
+    <script src="{% static 'js/material-kit.min.js' %}"></script>
+
+    <script>
+        // $(document).on("keypress", "form", function(event) { 
+        //     return event.keyCode != 13;
+        // });
+
+        $("#tag").on('change', function(event){
+            console.log($("#tag").val());
+        });
+
+        $("#tag-form").on('submit', function () {
+            var tags = $('#tag').val();
+
+            $.ajax({
+                url: '/scrape/medium',
+                data: {
+                'tags': tags
+                },
+                dataType: 'json',
+                success: function (data) {
+                if (data) {
+                    
+                }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
