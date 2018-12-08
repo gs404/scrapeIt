@@ -5,4 +5,5 @@ app_name = 'scraped'
 
 urlpatterns = [
     url(r'^$', views.scrape, name="scrape"),
+    url(r'^scrape/medium/$', views.scraped, name="scraped"),
 ]

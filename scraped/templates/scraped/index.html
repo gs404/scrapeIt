@@ -12,96 +12,172 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/material-kit.min.css' %}"/>   
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}"/> 
 
 </head>
-    <body>
-            <nav class="navbar navbar-inverse navbar-expand-lg bg-dark" role="navigation-demo">
-                    <div class="container">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-translate">
-                            <a class="navbar-brand" href="#">SCRAPEIT</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                                <span class="navbar-toggler-icon"></span>
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                        </div>
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="material-icons">settings</i>About
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </div>
-                    <!-- /.container-->
-                </nav>
-
-            <div class="subscribe-line subscribe-line-image" style="background-image: url('{% static 'images/pexels-photo-273222.jpeg' %}'); background-size: cover;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 ml-auto mr-auto">
-                            <div class="text-center">
-                                <h3 class="title">Scrape Medium</h3>
-                                <p class="description">
-                                    Enter medium tags here to scrape most recent medium blogs and retrieve info.
-                                </p>
-                            </div>
-                            <div class="card card-raised card-form-horizontal">
-                                <div class="card-body ">
-                                    <form action="" id="tag-form" method="POST">
-                                        {% csrf_token %}
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-6 ">
-                                                <div class="input-group">
-                                                    <input type="text" value="" placeholder="Eg: business" class="form-control" id="tag" name="tag">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6 ">
-                                                <button type="submit" class="btn btn-primary btn-block">Scrape</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<body class="">
+        <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
+            <div class="container">
+                <div class="navbar-translate">
+                    <a class="navbar-brand" href="#"><b>ScrapeIt </b></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="button-container nav-item iframe-extern">
+                            <a href="#" class="btn btn-rose btn-round btn-block">
+                                <i class="material-icons">shopping_cart</i> About
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+        <div class="page-header header-filter clear-filter" data-parallax="true" style="background-image: url('{% static 'images/pexels-photo-273222.jpeg' %}');">
+            <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 ml-auto mr-auto" >
+                                    <div class="brand text-center p-5" style="background-color: rgba(3,3,3,0.5); border-radius: 0.5em;">
+                                            <h2><b>Scrape
+                                                <span class="pro-badge">
+                                                    MEDIUM
+                                                </span></b>
+                                            </h2>
+                                            <h4 class="title">Enter medium tags to scrape and retrieve info.</h4>
+                                
+                            <form id="tag-form" method="POST">
+                                {% csrf_token %}
+                                <div class="card card-raised card-form-horizontal pl-2 pr-2">
+                                    <div class="card-body">   
+                                            <div class="row">
+                                                <div class="col-lg-8 col-md-6 ">
+                                                    <div class="input-group">
+                                                        <input type="text" value="" placeholder="Eg: business" class="form-control" id="tag" name="tag">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 ">
+                                                    <button type="submit" class="btn btn-primary btn-block">Scrape</button>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="togglebutton ml-3">
+                                            <label>
+                                                Filter by top stories
+                                                <input type="checkbox" name="filter" id="filter">
+                                                <span class="toggle"></span>
+                                                Filter by latest stories
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+        <div class="main main-raised">
+            <div class="section section-basic">
+                <div class="container">
+            
+        </div>
+    </div>
+    </div>
         
-
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/material-kit.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
     <script src="{% static 'js/bootstrap-material-design.min.js' %}"></script>
-    <script src="{% static 'js/material-kit.min.js' %}"></script>
 
     <script>
         // $(document).on("keypress", "form", function(event) { 
         //     return event.keyCode != 13;
         // });
 
+        // $(document).ready(function(){
+        //     function getCookie(c_name) {
+        //         if(document.cookie.length > 0) {
+        //             c_start = document.cookie.indexOf(c_name + "=");
+        //             if(c_start != -1) {
+        //                 c_start = c_start + c_name.length + 1;
+        //                 c_end = document.cookie.indexOf(";", c_start);
+        //                 if(c_end == -1) c_end = document.cookie.length;
+        //                 return unescape(document.cookie.substring(c_start,c_end));
+        //             }
+        //         }
+        //         return "";
+        //     }
+
+        //     $(function () {
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 "X-CSRFToken": getCookie("csrftoken")
+        //             }
+        //         });
+        //     });
+        // });
+
+        // using jQuery
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
         $("#tag").on('change', function(event){
             console.log($("#tag").val());
         });
 
+        $("#filter").on('click', function() {
+            var selValue = $('input[name=filter]:checked').val() || "off";
+            console.log(selValue);
+        });
+
         $("#tag-form").on('submit', function () {
             var tags = $('#tag').val();
+            var selValue = $('input[name=filter]:checked').val() || "off";
 
             $.ajax({
-                url: '/scrape/medium',
+                url: '/scrape/medium/',
+                method: 'POST',
                 data: {
-                'tags': tags
+                'tags': tags,
+                'selValue': selValue
                 },
                 dataType: 'json',
                 success: function (data) {
-                if (data) {
-                    
-                }
+                    console.log(data);
                 }
             });
 
