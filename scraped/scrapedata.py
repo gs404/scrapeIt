@@ -58,6 +58,10 @@ def getarticle(alink):
     except:
         content = list(soup.select('.section-content')[0].children)[0].get_text()
 
+    a = get_object_or_404(Article, link = alink)
+    a.content = content
+    a.save()
+
     articleId = soup.select('link[rel=canonical]')[0].attrs.get('href','').split('-')[-1]
 
     r = requests.get(
@@ -80,6 +84,8 @@ def getarticle(alink):
             else:
                 continue
     
+        for i in list(zip(by, response)):
+            k = Response.objects.create(article = a, by = i[0], content = i[1])
     else:
         r = requests.get(
             url='https://medium.com/_/api/posts/' + articleId + '/responsesStream?filter=other',
@@ -97,6 +103,9 @@ def getarticle(alink):
                 by.append(i['name'])
             else:
                 continue
+
+        for i in list(zip(by, response)):
+            k = Response.objects.create(article = a, by = i[0], content = i[1])
 
     return(content, list(zip(by, response)))
 
