@@ -24,6 +24,10 @@ def getdata(tags, filterby):
         'claps' : [t.get_text() if t.get_text()!='' else 'None' for t in soup.select('.js-multirecommendCountButton')]
     }
 
+    tempset = []
+    data['links'] = [tempset.append(x) for x in data['links'] if not x in tempset]
+    data['links'] = tempset
+
     if data['authors']==[] and data['titles']==[]:
         data['found'] = False
         print('Could not find data for tag: ' + tags)
