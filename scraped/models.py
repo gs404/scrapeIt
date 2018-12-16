@@ -26,7 +26,7 @@ class Article(models.Model):
 class Response(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     by = models.CharField(max_length=25)
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return str(self.article).capitalize() + ' - ' + self.by

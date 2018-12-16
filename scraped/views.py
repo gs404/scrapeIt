@@ -19,5 +19,10 @@ def scraped(request):
     return JsonResponse(data)
 
 def scrapeArticle(request):
-    data = scrapedata.getarticle(request.POST["alink"])
-    return JsonResponse(article, safe = False)
+    content, responses = scrapedata.getarticle(request.POST["alink"])
+    data = {
+        'content' : content,
+        'responses' : responses
+    }
+    print(data)
+    return JsonResponse(data, safe = False)

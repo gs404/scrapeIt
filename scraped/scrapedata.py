@@ -1,6 +1,8 @@
 import requests
+import json
 from bs4 import BeautifulSoup
 from .models import *
+from django.shortcuts import get_object_or_404
 
 def getdata(tags, filterby):
     if filterby == "off":
@@ -10,7 +12,7 @@ def getdata(tags, filterby):
     res = requests.get(url)
     res.raise_for_status()
     soup = BeautifulSoup(res.text, "html.parser")
-    #print(len(soup.select('time')))
+    
     data = {
         'relatedTags' : [{'tag': a.get_text(), 'link': a.attrs.get('href', '')} for a in soup.select('a[data-action-source=related]')],
         'authors' : [a.get_text() if a.get_text()!='' else '' for a in soup.select('div > a.u-accentColor--textDarken')],
@@ -46,11 +48,57 @@ def getdata(tags, filterby):
     return(data)
 
 
-
 def getarticle(alink):
     res = requests.get(alink)
     res.raise_for_status()
     soup = BeautifulSoup(res.text, "html.parser")
+
+    try:
+        content = list(soup.select('.section-content')[0].children)[2].get_text()
+    except:
+        content = list(soup.select('.section-content')[0].children)[0].get_text()
+
+    articleId = soup.select('link[rel=canonical]')[0].attrs.get('href','').split('-')[-1]
+
+    r = requests.get(
+            url='https://medium.com/_/api/posts/' + articleId + '/responses?filter=best',
+            headers={
+                'X-Requested-With': 'XMLHttpRequest'
+        }
+    )
     
+    response, by = [], []
+    r = json.loads(r.text[16:])
+
+    if r['payload']['value']!=[]:
+        for i in r['payload']['value']:
+            response.append(i['previewContent']['bodyModel']['paragraphs'][0]['text'])
+
+        for i in r['payload']['references']['User'].values():
+            if i['name']!=a.author:
+                by.append(i['name'])
+            else:
+                continue
+    
+    else:
+        r = requests.get(
+            url='https://medium.com/_/api/posts/' + articleId + '/responsesStream?filter=other',
+            headers={
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        )
+        r = json.loads(r.text[16:])
+
+        for i in r['payload']['references']['Post'].values():
+            response.append(i['previewContent']['bodyModel']['paragraphs'][0]['text'])
+
+        for i in r['payload']['references']['User'].values():
+            if i['name']!=a.author:
+                by.append(i['name'])
+            else:
+                continue
+
+    return(content, list(zip(by, response)))
 
 # print(getdata("business", "off"))
+# getarticle("https://medium.com/darius-foroux/how-to-be-a-leader-that-inspires-people-to-change-f9ea6ea06daf")
