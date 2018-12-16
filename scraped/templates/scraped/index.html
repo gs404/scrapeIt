@@ -167,6 +167,7 @@
         $("#tag-form").on('submit', function () {
             var tags = $('#tag').val();
             var selValue = $('input[name=filter]:checked').val() || "off";
+            var t1 = performance.now();
 
             $.ajax({
                 url: '/scrape/medium/',
@@ -176,8 +177,33 @@
                 'selValue': selValue
                 },
                 dataType: 'json',
-                success: function (data) {
-                    console.log(data);
+                success: function (response) {
+                    var t2 = performance.now();
+                    console.log(response);
+                    console.log('Scraped data with tag ' + tags + ' in ' + (t2 - t1) + ' ms.');
+
+                    response = JSON.parse(response);
+                    var r;
+                    for (r in response[links]) {
+                        $.ajax({
+                        url: '/scrape/medium/each/',
+                        method: 'POST',
+                        data: {
+                        'alink': r
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function () {
+                            console.log('Could not scrape data with tag ' + tags);
+                        }
+                    });
+                }
+
+                },
+                error: function () {
+                    console.log('Could not scrape data with tag ' + tags);
                 }
             });
 
