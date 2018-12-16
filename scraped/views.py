@@ -15,11 +15,13 @@ def scraped(request):
         request.session['history'] = sessionList
     print(request.session['history'])
     data = scrapedata.getdata(request.POST["tags"], request.POST["selValue"])
+    # data = scrapedata.getdata("technology", "off")
     print(data)
     return JsonResponse(data)
 
 def scrapeArticle(request):
     content, responses = scrapedata.getarticle(request.POST["alink"])
+    # content, responses = scrapedata.getarticle("https://medium.com/darius-foroux/how-to-be-a-leader-that-inspires-people-to-change-f9ea6ea06daf")
     data = {
         'content' : content,
         'responses' : responses
